@@ -8,14 +8,18 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    document.title = "Login - Get Me a Chai";
-  }, []);
+  if (!session) {
+    document.title = "Login - lambda - to the future";
+  } else {
+    document.title = `${session.user.email} - lambda - to the future`;
+  }
+}, [session]);
 
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [session]);
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session]);
 
   return (
     <div className="flex flex-col items-center justify-center py-14 mx-auto text-white">

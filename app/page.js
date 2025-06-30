@@ -2,24 +2,18 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-// import ThreadLogo from "@/components/ThreadLogo"
-import HeroImage from "@/public/landingpage5.png"; // Add any worker-related image here
+import HeroImage from "@/public/landingpage5.png";
 import HowItWorks from "@/components/HowItWorks";
 import Link from "next/link";
 import { useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
 import ClickSpark from "@/components/ClickSpark";
-import RollingGallery from "@/components/RollingGallery"
-import CircularGallery from "@/components/CircularGallery"
+import RollingGallery from "@/components/RollingGallery";
+import CircularGallery from "@/components/CircularGallery";
 
- 
-
-
-// import VariableProximity from './VariableProximity';
 export default function HomePage() {
   const containerRef = useRef(null);
   return (
-   
     <ClickSpark
       sparkColor="#fff"
       sparkSize={10}
@@ -27,21 +21,15 @@ export default function HomePage() {
       sparkCount={8}
       duration={400}
     >
-      
       <main className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center px-6 md:px-12">
-        {/* Logo fade-in */}
-
         <motion.div
-        
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           className="mb-6"
         ></motion.div>
 
-        {/* Hero Text Block */}
         <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-6xl">
-          {/* TEXT ANIMATION */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -49,12 +37,10 @@ export default function HomePage() {
             className="text-center md:text-left md:w-1/2 space-y-5"
           >
             <div ref={containerRef} style={{ position: "relative" }}>
-              
               <h1 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-white">
                 Need Help at Home? <br />
                 <span className="text-orange-500">Find Workers Near You</span>
               </h1>
-
               <p className="text-lg text-slate-600 dark:text-slate-400">
                 Mechanics, electricians, plumbers and more — available at your
                 location, on your schedule.
@@ -62,13 +48,13 @@ export default function HomePage() {
             </div>
             <div className="flex justify-center md:justify-start gap-4 mt-4">
               <Link href="/workers">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-orange-500 text-white px-6 py-3 rounded-lg shadow hover:bg-orange-600"
-              >
-                Get Started
-              </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-orange-500 text-white px-6 py-3 rounded-lg shadow hover:bg-orange-600"
+                >
+                  Get Started
+                </motion.button>
               </Link>
               <Link href="/about">
                 <motion.button
@@ -81,9 +67,7 @@ export default function HomePage() {
               </Link>
             </div>
           </motion.div>
-          
 
-          {/* IMAGE JUMP ANIMATION */}
           <motion.div
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: [80, -10, 0], opacity: 1 }}
@@ -100,12 +84,61 @@ export default function HomePage() {
             />
           </motion.div>
         </div>
-        <div className="w-full md:w-[600px]" style={{ height: '300px', position: 'relative' }}>
-        <h1 className="text-3xl md:text-4xl font-bold text-center  text-slate-800 dark:text-white">Explore <p className="text-3xl md:text-4xl font-bold text-center  text-slate-800 dark:text-orange-600">Workers</p></h1>
-  <CircularGallery bend={0} textColor="#ffffff" borderRadius={0.15} />
-</div>
+
+        <div
+           className="  mt-28 md:w-[700px]   flex flex-col items-center justify-center rounded-2xl "
+          style={{ height: "300px", position: "relative" }}
+        >
+          <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 dark:text-white">
+            Explore <span className="text-orange-600">Workers</span>
+          </h1>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="overflow-x-auto no-scrollbar w-[400px] mt-6 md:w-[550px]  p-0 shadow-md"
+          >
+            <div className="overflow-x-auto  no-scrollbar  bg-gradient-to-r mask-b-from-slate-50 via-orange-400 mask-b-to-slate-50  p-4">
+              <div className="flex gap-4 md:gap-6 w-max">
+                {[
+                  { name: "Plumber", image: "/plumber2.jpeg" },
+                  { name: "Mechanic", image: "/plumber.jpg" },
+                  { name: "Electrician", image: "/plumber1.jpg" },
+                  { name: "Painter", image: "/plumber.jpg" },
+                  { name: "Carpenter", image: "/plumber1.jpg" },
+                  { name: "Laptop Repair", image: "/plumber1.jpg" },
+                  { name: "Cable Repair", image: "/plumber1.jpg" },
+                ].map((worker, i) => (
+                  <div key={i} className="flex flex-col items-center p-2">
+                    <motion.div
+                      whileHover={{ scale: 1.15 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="min-w-[120px] md:min-w-[100px] md:min-h-[100px] p-1 rounded-full bg-white dark:bg-orange-600 shadow-md text-center cursor-pointer"
+                    >
+                      <Link href={`/workers/${worker.name.toLowerCase()}`}>
+
+                      <div className="rounded-full bg-white dark:bg-orange-600 p-[1px]">
+                        <img
+                          src={worker.image}
+                          alt={worker.name}
+                          className="w-[100px] h-[100px] object-cover rounded-full"
+                        />
+                      </div>
+                      </Link>
+                    </motion.div>
+                    <p className="text-sm md:text-base font-semibold mt-2 text-black dark:font-bold dark:text-black">
+                      {worker.name}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
         <HowItWorks />
-        {/* <motion.div style={{ backgroundColor }} /> */}
+
         <div className="flex flex-col items-center justify-center mt-16">
           <motion.h2
             className="text-2xl md:text-3xl font-semibold mb-4"
@@ -170,12 +203,13 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        
-         
-        <RollingGallery className="mt-16 text-amber-50" autoplay={true} pauseOnHover={true} />
-       
+
+        <RollingGallery
+          className="mt-16 text-amber-50"
+          autoplay={true}
+          pauseOnHover={true}
+        />
       </main>
     </ClickSpark>
-    
   );
 }
