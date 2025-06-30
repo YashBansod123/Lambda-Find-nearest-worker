@@ -9,6 +9,10 @@ import Link from "next/link";
 import { useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
 import ClickSpark from "@/components/ClickSpark";
+import RollingGallery from "@/components/RollingGallery"
+import CircularGallery from "@/components/CircularGallery"
+
+ 
 
 
 // import VariableProximity from './VariableProximity';
@@ -57,7 +61,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="flex justify-center md:justify-start gap-4 mt-4">
-              <Link href="/example">
+              <Link href="/workers">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -77,6 +81,7 @@ export default function HomePage() {
               </Link>
             </div>
           </motion.div>
+          
 
           {/* IMAGE JUMP ANIMATION */}
           <motion.div
@@ -95,6 +100,10 @@ export default function HomePage() {
             />
           </motion.div>
         </div>
+        <div className="w-full md:w-[600px]" style={{ height: '300px', position: 'relative' }}>
+        <h1 className="text-3xl md:text-4xl font-bold text-center  text-slate-800 dark:text-white">Explore <p className="text-3xl md:text-4xl font-bold text-center  text-slate-800 dark:text-orange-600">Workers</p></h1>
+  <CircularGallery bend={0} textColor="#ffffff" borderRadius={0.15} />
+</div>
         <HowItWorks />
         {/* <motion.div style={{ backgroundColor }} /> */}
         <div className="flex flex-col items-center justify-center mt-16">
@@ -162,6 +171,9 @@ export default function HomePage() {
           </div>
         </div>
         
+         
+        <RollingGallery className="mt-16 text-amber-50" autoplay={true} pauseOnHover={true} />
+       
       </main>
     </ClickSpark>
     
