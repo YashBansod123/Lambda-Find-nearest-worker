@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import handlePayment from "@/components/HandlePayment";
-
+import { useSearchParams } from "next/navigation";
 const plumbers = [
   {
     name: "Star Plumbing Work",
@@ -55,69 +55,66 @@ const plumbers = [
 ];
 
 export default function PlumberPage() {
+  const sortOptions = ["Relevance", "Rating", "Popular"];
+
   const [sort, setSort] = useState("relevance");
+  const [plumbersToShow, setPlumbersToShow] = useState([]);
   const [userCity, setUserCity] = useState("");
-  const [filteredPlumbers, setFilteredPlumbers] = useState([]);
   const [locationDenied, setLocationDenied] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const sortOptions = ["Relevance", "Rating", "Popular", "Distance"];
+  const searchParams = useSearchParams();
+  const queryCity = searchParams.get("city");
 
-  // Get user's city using geolocation + reverse geocoding
+  // Get user city on load
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
+        async (pos) => {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+          );
+          const data = await res.json();
 
-          try {
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-            );
-            const data = await res.json();
-            const cityName =
-              data?.address?.city ||
-              data?.address?.town ||
-              data?.address?.village ||
-              "";
+          const cityName =
+            data?.address?.city ||
+            data?.address?.town ||
+            data?.address?.village ||
+            "";
 
-            setUserCity(cityName);
-
-            const cityPlumbers = plumbers.filter(
-              (plumber) => plumber.city.toLowerCase() === cityName.toLowerCase()
-            );
-            setFilteredPlumbers(cityPlumbers);
-          } catch (error) {
-            console.error("Error in reverse geocoding:", error);
-            setFilteredPlumbers(plumbers); // fallback
-          }
+          setUserCity(cityName);
         },
-        () => {
-          setLocationDenied(true);
-          setFilteredPlumbers(plumbers); // fallback
-        }
+        () => setLocationDenied(true)
       );
-    } else {
-      setFilteredPlumbers(plumbers); // fallback
     }
   }, []);
 
-  // Apply sorting
+  // Apply city filtering
   useEffect(() => {
-    let sorted = [...(userCity ? filteredPlumbers : plumbers)];
+    let base = [...plumbers];
 
-    if (sort === "rating") {
-      sorted.sort((a, b) => b.rating - a.rating);
-    } else if (sort === "popular") {
-      sorted.sort((a, b) => (b.reviews || 0) - (a.reviews || 0));
-    } else if (sort === "distance") {
-      sorted = [...sorted]; // No distance data yet
+    if (queryCity) {
+      base = base.filter(
+        (p) => p.city.toLowerCase() === queryCity.toLowerCase()
+      );
+    } else if (userCity) {
+      base = base.filter(
+        (p) => p.city.toLowerCase() === userCity.toLowerCase()
+      );
     }
 
-    setFilteredPlumbers(sorted);
-  }, [sort]);
+    // Apply sorting
+    if (sort === "rating") {
+      base.sort((a, b) => b.rating - a.rating);
+    } else if (sort === "popular") {
+      base.sort((a, b) => (b.reviews || 0) - (a.reviews || 0));
+    }
 
-  const finalPlumbers = userCity ? filteredPlumbers : plumbers;
+    setPlumbersToShow(base);
+  }, [queryCity, userCity, sort]);
 
+  
   return (
     <div className="min-h-screen p-6 bg-white dark:bg-slate-950 text-black dark:text-white">
       <h1 className="text-2xl font-bold mb-4">
@@ -160,7 +157,8 @@ export default function PlumberPage() {
 
       {/* Plumber Cards */}
       <div className="flex flex-col gap-6">
-        {finalPlumbers.map((plumber, index) => (
+        {plumbersToShow.map((plumber, index) => (
+
           <div
             key={index}
             className="border rounded-xl p-4 shadow-sm flex gap-4 dark:bg-slate-900 bg-slate-100"

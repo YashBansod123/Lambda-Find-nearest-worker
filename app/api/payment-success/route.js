@@ -1,9 +1,18 @@
+// app/api/payment-success/route.js
 import crypto from "crypto";
 import connectDb from "@/db/connectDb";
 import Order from "@/models/Order";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions"; // update path if needed
 
 export async function POST(req) {
   try {
+    const session = await getServerSession(authOptions); // ✅ get the user session
+
+    if (!session || !session.user?.email) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
     const {
       razorpay_order_id,
       razorpay_payment_id,
@@ -23,6 +32,7 @@ export async function POST(req) {
     }
 
     await connectDb();
+
     await Order.create({
       razorpay_order_id,
       razorpay_payment_id,
@@ -30,6 +40,7 @@ export async function POST(req) {
       plumberId,
       amount,
       status: "paid",
+      userEmail: session.user.email, // ✅ save the email
     });
 
     return Response.json({ success: true, message: "Order saved" });
