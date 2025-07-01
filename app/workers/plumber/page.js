@@ -1,10 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import handlePayment from "@/components/HandlePayment";
 
 const plumbers = [
   {
     name: "Star Plumbing Work",
+    phone: "+917773919509",
+    whatsapp: "+917773919509",
     rating: 4.2,
     reviews: 25,
     verified: true,
@@ -12,9 +15,12 @@ const plumbers = [
     tags: ["Plumbers", "Plumbing Contractors"],
     image: "/plumber1.jpg",
     city: "Nagpur",
+    price: 250,
   },
   {
     name: "Maharshtra Plumbing Services",
+    phone: "+917887319676",
+    whatsapp: "+917887319676",
     rating: 4.4,
     reviews: 900,
     verified: true,
@@ -22,6 +28,7 @@ const plumbers = [
     tags: ["Wall Painting", "Maintenance", "Service Guarantee"],
     image: "/plumber.jpg",
     city: "Nagpur",
+    price: 400,
   },
   {
     name: "Home Plumbing Services",
@@ -32,6 +39,7 @@ const plumbers = [
     tags: ["Wall Painting", "Maintenance", "plumbing"],
     image: "/plumber.jpg",
     city: "Raipur",
+    price: 500,
   },
   {
     name: "Home Service Agency",
@@ -42,6 +50,7 @@ const plumbers = [
     tags: ["Wall Painting", "Maintenance", "Service Guarantee"],
     image: "/plumber.jpg",
     city: "Raipur",
+    price: 600,
   },
 ];
 
@@ -74,8 +83,7 @@ export default function PlumberPage() {
             setUserCity(cityName);
 
             const cityPlumbers = plumbers.filter(
-              (plumber) =>
-                plumber.city.toLowerCase() === cityName.toLowerCase()
+              (plumber) => plumber.city.toLowerCase() === cityName.toLowerCase()
             );
             setFilteredPlumbers(cityPlumbers);
           } catch (error) {
@@ -186,10 +194,31 @@ export default function PlumberPage() {
                 ))}
               </div>
               <div className="flex gap-3 mt-3">
-                <Button className="bg-orange-600 cursor-pointer hover:bg-orange-700">
-                   Book Now
+                <div>
+                <a href={`tel:${plumber.phone}`}>
+                  <Button className=" cursor-pointer ">
+                   📞
+                  </Button>
+                </a>
+                <Button 
+                onClick={() => handlePayment(plumber)}
+                className=" cursor-pointer  bg-orange-600 hover:bg-orange-700">
+                  ₹ {plumber.price}
                 </Button>
-                <Button variant="outline">💬 WhatsApp</Button>
+                </div>
+                {plumber.whatsapp ? (
+                  <a
+                    href={`https://wa.me/${plumber.whatsapp.replace("+", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline">💬 WhatsApp</Button>
+                  </a>
+                ) : (
+                  <Button variant="outline" disabled>
+                    💬 WhatsApp Not Available
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -198,4 +227,3 @@ export default function PlumberPage() {
     </div>
   );
 }
-

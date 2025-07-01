@@ -2,7 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import SessionWrapper from '@/components/SessionWrapper'
+import SessionWrapper from "@/components/SessionWrapper";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,6 +22,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ Razorpay script here */}
+        <script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          async
+        ></script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black dark:bg-slate-950 dark:text-white transition-colors duration-300`}
       >
@@ -28,7 +36,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
           <Footer />
-       </SessionWrapper>
+        </SessionWrapper>
       </body>
     </html>
   );

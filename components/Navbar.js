@@ -16,8 +16,8 @@ export default function Navbar() {
 
   const items = [
     { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "My Bookings", href: "/dashboard/booking" },
+    { label: "Contact", href: "#" },
   ]
 
   useEffect(() => {
@@ -40,9 +40,11 @@ export default function Navbar() {
 
   return (
     <nav className="w-full px-2 py-2 bg-gray-300 dark:bg-slate-900 border-b border-slate-300 dark:border-slate-700 flex justify-between items-center">
+      
       <div className=" mx-[-2%] flex justify-center items-center">
+        <Link href="/" className="flex items-center">
         <ThreadLogo size={50} />
-        <Link href="/">
+        
           <h1 className="hidden md:flex items-center text-2xl font-semibold text-slate-800 dark:text-white ml-2">
             <span className="text-orange-500">L</span>ambda
           </h1>
