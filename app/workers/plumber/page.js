@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import handlePayment from "@/components/HandlePayment";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-
+import ThreadLogo from "@/components/ThreadLogo";
 export default function PlumberPage() {
   const [plumbers, setPlumbers] = useState([]);
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function PlumberPage() {
   const [userCity, setUserCity] = useState("");
   const [locationDenied, setLocationDenied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  cosnt [loading, setLoading]=useState(true);
+  const [loading, setLoading]=useState(true);
   const searchParams = useSearchParams();
   const queryCity = searchParams.get("city");
   const handleClick = (plumber) => {
@@ -37,7 +37,7 @@ export default function PlumberPage() {
   };
 
   useEffect(()=>{
-    if(plumbers.length<0){
+    if(plumbers.length>0){
       setLoading(false);
     }
   })
@@ -92,7 +92,7 @@ export default function PlumberPage() {
   
   return (
     <>{
-      Loading?(
+      loading?(
          <div className="flex justify-center -ml-50 py-10 ">
             <ThreadLogo size={250} strokeWidth={6} />
           </div>):(
