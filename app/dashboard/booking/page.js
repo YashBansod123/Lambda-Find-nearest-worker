@@ -3,20 +3,41 @@ import { useEffect, useState } from "react";
 
 export default function MyBookings() {
   const [orders, setOrders] = useState([]);
+  const [ratingState, setRatingState] = useState({}); // { orderId: rating }
+
   const updateStatus = async (orderId, newStatus) => {
-  const res = await fetch("/api/update-status", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ orderId, status: newStatus }),
-  });
+    const res = await fetch("/api/update-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId, status: newStatus }),
+    });
 
-  const data = await res.json();
-  if (data.success) {
-    // refetch bookings or filter out updated one
-    setOrders(prev => prev.filter(order => order._id !== orderId));
-  }
-};
+    const data = await res.json();
+    if (data.success && newStatus === "completed") {
+      // Just update the status locally to show rating form
+      setOrders(prev =>
+        prev.map(order =>
+          order._id === orderId ? { ...order, status: "completed" } : order
+        )
+      );
+    } else {
+      // remove cancelled ones
+      setOrders(prev => prev.filter(order => order._id !== orderId));
+    }
+  };
 
+  const submitRating = async (orderId, plumberId, rating) => {
+    const res = await fetch("/api/rate-worker", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plumberId, rating }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      setOrders(prev => prev.filter(order => order._id !== orderId));
+    }
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -52,6 +73,7 @@ export default function MyBookings() {
               <p className="text-xs text-gray-400">
                 Date: {new Date(order.createdAt).toLocaleString()}
               </p>
+
               {order.status === "paid" && (
                 <div className="flex gap-2 mt-2">
                   <button
@@ -65,6 +87,43 @@ export default function MyBookings() {
                     className="bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded"
                   >
                     Cancel
+                  </button>
+                </div>
+              )}
+
+              {/* Rating UI if status is completed */}
+              {order.status === "completed" && (
+                <div className="mt-3">
+                  <p className="text-sm">Rate this worker (1 to 5 stars):</p>
+                  <select
+                    value={ratingState[order._id] || ""}
+                    onChange={e =>
+                      setRatingState({
+                        ...ratingState,
+                        [order._id]: Number(e.target.value),
+                      })
+                    }
+                    className="bg-gray-100 dark:bg-slate-800 border rounded p-1"
+                  >
+                    <option value="">--Select--</option>
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <option key={star} value={star}>
+                        ⭐ {star}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={() =>
+                      submitRating(
+                        order._id,
+                        order.plumberId,
+                        ratingState[order._id]
+                      )
+                    }
+                    disabled={!ratingState[order._id]}
+                    className="ml-3 bg-orange-500 text-white px-3 py-1 rounded disabled:opacity-50"
+                  >
+                    Submit Rating
                   </button>
                 </div>
               )}

@@ -2,95 +2,72 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-const electricians = [
-  {
-    name: "PowerFix Electric Services",
-    rating: 4.7,
-    reviews: 112,
-    verified: true,
-    address: "Dharampeth, Nagpur",
-    tags: ["Electrician", "Wiring", "Installation"],
-    image: "/plumber.jpg",
-    city: "Nagpur",
-  },
-  {
-    name: "Shakti Electricals",
-    rating: 4.3,
-    reviews: 80,
-    verified: true,
-    address: "Wardha Road, Nagpur",
-    tags: ["Switch Board", "Fitting", "Maintenance"],
-    image: "/plumber.jpg",
-    city: "Nagpur",
-  },
-  {
-    name: "Raipur Voltage Masters",
-    rating: 4.8,
-    reviews: 140,
-    verified: true,
-    address: "Pandri Road, Raipur",
-    tags: ["AC Wiring", "Panel Setup", "Quick Fix"],
-    image: "/plumber.jpg",
-    city: "Raipur",
-  },
-  {
-    name: "LightHouse Electric",
-    rating: 4.6,
-    reviews: 95,
-    verified: true,
-    address: "Station Road, Raipur",
-    tags: ["LED Fitting", "Generator", "Inverter Setup"],
-    image: "/plumber.jpg",
-    city: "Raipur",
-  },
-];
+
 
 export default function ElectricianPage() {
   const [sort, setSort] = useState("relevance");
   const [userCity, setUserCity] = useState("");
   const [filteredElectricians, setFilteredElectricians] = useState([]);
   const [locationDenied, setLocationDenied] = useState(false);
+   const [electricians, setElectricians] = useState([]);
+
+  useEffect(() => {
+  const fetchElectricians = async () => {
+    try {
+      const res = await fetch("/api/Workers?profession=electricians");
+      const data = await res.json();
+      setElectricians(data);
+    } catch (error) {
+      console.error("Failed to fetch plumbers:", error);
+    }
+  };
+
+  fetchElectricians();
+}, []);
 
   const sortOptions = ["Relevance", "Rating", "Popular", "Distance"];
 
   // Location & City Detection
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
+  if (!electricians.length) return;
 
-          try {
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-            );
-            const data = await res.json();
-            const cityName =
-              data?.address?.city ||
-              data?.address?.town ||
-              data?.address?.village ||
-              "";
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
 
-            setUserCity(cityName);
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+          );
+          const data = await res.json();
+          const cityName =
+            data?.address?.city ||
+            data?.address?.town ||
+            data?.address?.village ||
+            "";
 
-            const cityElectricians = electricians.filter(
-              (e) => e.city.toLowerCase() === cityName.toLowerCase()
-            );
-            setFilteredElectricians(cityElectricians);
-          } catch (err) {
-            console.error("Geocoding error:", err);
-            setFilteredElectricians(electricians);
-          }
-        },
-        () => {
-          setLocationDenied(true);
+          setUserCity(cityName);
+
+          const cityElectricians = electricians.filter(
+            (e) => e.city.toLowerCase() === cityName.toLowerCase()
+          );
+          setFilteredElectricians(cityElectricians);
+        } catch (err) {
+          console.error("Geocoding error:", err);
           setFilteredElectricians(electricians);
         }
-      );
-    } else {
-      setFilteredElectricians(electricians);
-    }
-  }, []);
+      },
+      () => {
+        setLocationDenied(true);
+        setFilteredElectricians(electricians);
+      }
+    );
+  } else {
+    setFilteredElectricians(electricians);
+  }
+}, [electricians]);
+
 
   // Sorting
   useEffect(() => {

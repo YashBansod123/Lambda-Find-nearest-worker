@@ -4,35 +4,42 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
+import {motion,AnimatePresence} from "framer-motion"
 import ThreadLogo from "@/components/ThreadLogo";
-import GooeyNav from "@/components/GoeyNav";
-import { useSession, signOut } from "next-auth/react"; // 👈 for session
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import UserProfilePanel from "@/components/UserProfilePanel";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 export default function Navbar() {
   const [theme, setTheme] = useState("light");
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const [search, setSearch] = useState("");
-  
-
-  // Get user city using geolocation
- 
-const handleSearch = (e) => {
-  e.preventDefault();
-  if (!search.trim()) return;
-
-  // Route to plumber page with city as search
-  router.push(`/workers/plumber?city=${encodeURIComponent(search.trim())}`);
-  setSearch(""); // optional
-};
-
-
-  const { data: session } = useSession(); // 👈 Get session
-
-  const items = [
-    { label: "My Bookings", href: "/dashboard/booking" },
-
+  const { data: session } = useSession();
+  const [showSearch, setShowSearch] = useState(false);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const placeholders = [
+    "plumber...",
+    "electrician...",
+    "painter...",
+    "mechanic...",
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+    }, 4000); // Change every 1 second
+
+    return () => clearInterval(interval);
+  }, []);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!search.trim()) return;
+    const query = encodeURIComponent(search.trim().toLowerCase());
+    router.push(`/workers/search?q=${query}`);
+    setSearch("");
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -53,77 +60,81 @@ const handleSearch = (e) => {
   if (!isMounted) return null;
 
   return (
-    <nav className="w-full px-2 py-2 bg-gray-300 dark:bg-slate-900 border-b border-slate-300 dark:border-slate-700 flex justify-between items-center">
-      <div className=" mx-[-2%] flex justify-center items-center">
-        <Link href="/" className="flex items-center">
-          <ThreadLogo size={50} />
-
-          <h1 className="hidden md:flex items-center text-2xl font-semibold text-slate-800 dark:text-white ml-2">
-            <span className="text-orange-500">L</span>ambda
-          </h1>
-        </Link>
-      </div>
-      <form onSubmit={handleSearch} className="flex gap-2 border-b-4 border-amber-600 p-2 rounded-2xl bg-slate-800">
-        <input
-          type="text"
-          placeholder="Search City...."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="rounded-md px-3 py-1 text-black dark:text-amber-100 border-none outline-none"
-        />
-        <button
-          type="submit"
-          className="text-gray-800 font-semibold bg-orange-400 px-3 py-1 rounded-md"
-        >
-          Search
-        </button>
-      </form>
-      <div className="flex gap-5 justify-center items-center">
-        <div
-          className="hidden md:flex items-center"
-          style={{ height: "60px", position: "relative" }}
-        >
-          <GooeyNav
-            items={items}
-            particleCount={15}
-            particleDistances={[90, 10]}
-            particleR={100}
-            initialActiveIndex={0}
-            animationTime={600}
-            timeVariance={300}
-            colors={[1, 2, 3, 1, 2, 3, 1, 4]}
-          />
+    <nav className="w-full px-4 py-2 bg-gray-300 dark:bg-slate-900 border-b border-slate-300 dark:border-slate-700">
+      <div className="flex  md:flex-row items-center justify-between gap-4">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center">
+          <div className="flex -ml-6 gap-2">
+            <ThreadLogo size={50} />
+            </div>
+            <h1 className="hidden md:block text-2xl font-semibold text-slate-800 dark:text-white ml-2">
+              <span className="text-orange-500">L</span>ambda
+            </h1>
+          </Link>
         </div>
 
-        <Button variant="ghost" onClick={toggleTheme}>
-          {theme === "light" ? (
-            <Moon className="h-5 w-5" />
-          ) : (
-            <Sun className="h-5 w-5" />
-          )}
-        </Button>
+        {/* Search */}
+        <div className="relative ">
+      <button
+        onClick={() => setShowSearch((prev) => !prev)}
+        className="px-4 py-2 -ml-[420px] bg-orange-500 rounded-md text-white hover:bg-orange-600"
+      >
+        <i className="fa-solid fa-magnifying-glass"></i>
+      </button>
 
-        {/* ✅ Session-based UI */}
-        {session ? (
-          <div className="flex items-center gap-3">
-            <span className="text-[18px] text-slate-800 font-serif dark:text-slate-200">
-              {session.user.name} {/* Show only before @ */}
-            </span>
-            <Button
-              onClick={() => signOut()}
-              variant="outline"
-              className="text-sm"
+      {/* 🔎 Animated Search Form */}
+      <AnimatePresence>
+        {showSearch && (
+          <motion.form
+            onSubmit={handleSearch}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: -200 }}
+            exit={{ opacity: 0, x: 100 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-16 left-0 bg-white dark:bg-slate-700 p-2 rounded-l-4xl rounded-r-xl shadow-md flex items-center gap-2 z-50"
+          >
+            <input
+              type="text"
+              placeholder={placeholders[placeholderIndex]}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="px-3 py-1 w-64 rounded-md bg-white text-black dark:bg-slate-700 dark:text-white outline-none"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md"
             >
-              Logout
-            </Button>
-          </div>
-        ) : (
-          <Link href="/login">
-            <Button variant="outline" className="text-sm">
-              Login
+              Search
+            </button>
+          </motion.form>
+        )}
+      </AnimatePresence>
+    </div>
+  
+
+        {/* Right Controls */}
+        <div className="flex items-center gap-2">
+          <Link href="/dashboard/booking">
+            <Button className="hidden md:inline-block border border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white">
+              My bookings
             </Button>
           </Link>
-        )}
+
+          <Button variant="ghost" onClick={toggleTheme}>
+            {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+          </Button>
+
+          {session ? (
+            <UserProfilePanel />
+          ) : (
+            <Link href="/login">
+              <Button variant="outline" className="text-sm">
+                Login
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );

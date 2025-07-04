@@ -1,38 +1,75 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import handlePayment from "@/components/HandlePayment"; // ✅ Import here
 
-export default function WorkerCard({ name, role, price, location, rating, image }) {
+export default function WorkerCard({ worker }) {
+  const router = useRouter(); // ✅ Get router instance
+
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      transition={{ type: "spring", stiffness: 300 }}
-      className="bg-white dark:bg-slate-900 rounded-xl shadow-md p-5 w-full max-w-sm border border-slate-200 dark:border-slate-800"
-    >
-      <div className="flex items-center space-x-4 mb-4">
-        <Image
-          src={image}
-          alt={name}
-          width={60}
-          height={60}
-          className="rounded-full object-cover"
-        />
-        <div>
-          <h3 className="text-lg font-bold text-slate-800 dark:text-white">{name}</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{role}</p>
+    <div className="border rounded-xl p-4 shadow-sm flex gap-4 dark:bg-slate-900 bg-slate-100">
+      <img
+        src={worker.image}
+        alt={worker.name}
+        className="w-28 h-28 object-cover rounded-md"
+      />
+      <div className="flex-1">
+        <div className="flex items-center gap-2">
+          <h2 className="text-xl font-semibold">{worker.name}</h2>
+          {worker.verified ? (
+            <span className="text-blue-500">✔ Verified</span>
+          ) : (
+            <span className="text-red-500">❌ Not Verified</span>
+          )}
+        </div>
+
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {worker.address}
+        </p>
+
+        <p className="text-green-600 font-semibold mt-1">
+          ⭐ {worker.rating} ({worker.ratingsCount || 0} Ratings)
+        </p>
+
+        <div className="flex gap-2 mt-2 flex-wrap">
+          {worker.tags?.map((tag, i) => (
+            <span
+              key={i}
+              className="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex gap-3 mt-3 flex-wrap">
+          <a href={`tel:${worker.phone}`}>
+            <Button className="cursor-pointer">📞 Call</Button>
+          </a>
+
+          <Button
+            onClick={() => handlePayment(worker, router)}
+            className="bg-orange-600 hover:bg-orange-700 cursor-pointer"
+          >
+            ₹ {worker.price || "N/A"}
+          </Button>
+
+          {worker.whatsapp ? (
+            <a
+              href={`https://wa.me/${worker.whatsapp.replace("+", "")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline">💬 WhatsApp</Button>
+            </a>
+          ) : (
+            <Button variant="outline" disabled>
+              💬 Not Available
+            </Button>
+          )}
         </div>
       </div>
-
-      <div className="text-sm text-slate-600 dark:text-slate-300 space-y-1">
-        <p><strong>Location:</strong> {location}</p>
-        <p><strong>Charges:</strong> ₹{price}</p>
-        <p><strong>Rating:</strong> ⭐ {rating}/5</p>
-      </div>
-
-      <button className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg">
-        Book Now
-      </button>
-    </motion.div>
-  )
+    </div>
+  );
 }

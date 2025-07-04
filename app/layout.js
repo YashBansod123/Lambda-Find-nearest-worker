@@ -3,6 +3,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionWrapper from "@/components/SessionWrapper";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { use } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,8 +23,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+    
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth overflow-x-hidden m-0 p-0">
       <head>
         {/* ✅ Razorpay script here */}
         <script
@@ -30,11 +34,12 @@ export default function RootLayout({ children }) {
         ></script>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black dark:bg-slate-950 dark:text-white transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black dark:bg-slate-950 dark:text-white transition-colors duration-300 overflow-x-hidden m-0 p-0`}
       >
         <SessionWrapper>
           <Navbar />
           {children}
+          <ToastContainer />
           <Footer />
         </SessionWrapper>
       </body>

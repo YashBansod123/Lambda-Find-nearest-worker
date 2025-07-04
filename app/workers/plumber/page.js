@@ -3,58 +3,25 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import handlePayment from "@/components/HandlePayment";
 import { useSearchParams } from "next/navigation";
-const plumbers = [
-  {
-    name: "Star Plumbing Work",
-    phone: "+917773919509",
-    whatsapp: "+917773919509",
-    rating: 4.2,
-    reviews: 25,
-    verified: true,
-    address: "Umred Road Taj Bagh, Nagpur",
-    tags: ["Plumbers", "Plumbing Contractors"],
-    image: "/plumber1.jpg",
-    city: "Nagpur",
-    price: 250,
-  },
-  {
-    name: "Maharshtra Plumbing Services",
-    phone: "+917887319676",
-    whatsapp: "+917887319676",
-    rating: 4.4,
-    reviews: 900,
-    verified: true,
-    address: "Jaitala Road Trimurti Nagar, Nagpur",
-    tags: ["Wall Painting", "Maintenance", "Service Guarantee"],
-    image: "/plumber.jpg",
-    city: "Nagpur",
-    price: 400,
-  },
-  {
-    name: "Home Plumbing Services",
-    rating: 4.6,
-    reviews: 290,
-    verified: true,
-    address: "Station Road, Raipur",
-    tags: ["Wall Painting", "Maintenance", "plumbing"],
-    image: "/plumber.jpg",
-    city: "Raipur",
-    price: 500,
-  },
-  {
-    name: "Home Service Agency",
-    rating: 4.9,
-    reviews: 140,
-    verified: true,
-    address: "Pandri Road, Raipur",
-    tags: ["Wall Painting", "Maintenance", "Service Guarantee"],
-    image: "/plumber.jpg",
-    city: "Raipur",
-    price: 600,
-  },
-];
+import { useRouter } from "next/navigation";
 
 export default function PlumberPage() {
+  const [plumbers, setPlumbers] = useState([]);
+  const router = useRouter();
+  useEffect(() => {
+  const fetchPlumbers = async () => {
+    try {
+      const res = await fetch("/api/Workers?profession=Plumber");
+      const data = await res.json();
+      setPlumbers(data);
+    } catch (error) {
+      console.error("Failed to fetch plumbers:", error);
+    }
+  };
+
+  fetchPlumbers();
+}, []);
+
   const sortOptions = ["Relevance", "Rating", "Popular"];
 
   const [sort, setSort] = useState("relevance");
@@ -65,6 +32,9 @@ export default function PlumberPage() {
 
   const searchParams = useSearchParams();
   const queryCity = searchParams.get("city");
+  const handleClick = (plumber) => {
+    handlePayment(plumber, router); // ✅ passing router
+  };
 
   // Get user city on load
   useEffect(() => {
@@ -174,6 +144,9 @@ export default function PlumberPage() {
                 {plumber.verified && (
                   <span className="text-blue-500">✔ Verified</span>
                 )}
+                {!plumber.verified && (
+                  <span className="text-blue-500">❌ Verified</span>
+                )}
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {plumber.address}
@@ -199,7 +172,7 @@ export default function PlumberPage() {
                   </Button>
                 </a>
                 <Button 
-                onClick={() => handlePayment(plumber)}
+                onClick={() => handleClick(plumber)}
                 className=" cursor-pointer  bg-orange-600 hover:bg-orange-700">
                   ₹ {plumber.price}
                 </Button>

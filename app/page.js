@@ -10,9 +10,20 @@ import { useRef } from "react";
 import ClickSpark from "@/components/ClickSpark";
 import RollingGallery from "@/components/RollingGallery";
 import CircularGallery from "@/components/CircularGallery";
-
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 export default function HomePage() {
   const containerRef = useRef(null);
+  const router = useRouter();
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!search.trim()) return;
+    const query = encodeURIComponent(search.trim().toLowerCase());
+    router.push(`/workers/search?q=${query}`);
+    setSearch("");
+  };
+
   return (
     <ClickSpark
       sparkColor="#fff"
@@ -46,6 +57,25 @@ export default function HomePage() {
                 location, on your schedule.
               </p>
             </div>
+            <form
+          onSubmit={handleSearch}
+          className="flex md:hidden sm:flex-row items-center gap-2 w-full sm:w-auto"
+        >
+
+          <input
+            type="text"
+            placeholder="Search City..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="px-3 py-2 w-full sm:w-64 rounded-md bg-white text-black dark:bg-slate-700 dark:text-white outline-none"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md md:w-full"
+          >
+            Search
+          </button>
+        </form>
             <div className="flex justify-center md:justify-start gap-4 mt-4">
               <Link href="/workers">
                 <motion.button
@@ -203,12 +233,34 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        {/* one br line using div to seaprate bottom portion with upper */}
+        <div className="w-full h-1 bg-gradient-to-r from-white to-orange-600 mt-28 "></div>
+        
+        {/* //button for login to create worker account */}
+        <div className="flex flex-col items-center justify-center mt-16">
+          <motion.h2
+            className="text-2xl md:text-3xl font-semibold mb-4"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            Create Your Account As a Worker
+          </motion.h2>
+          <Link href="/admin/add-worker">
+          <div className="flex items-center justify-center">
+            <motion.button
+              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              Sign Up
+            </motion.button>
+          </div>
+          </Link>
+        </div>
 
-        <RollingGallery
-          className="mt-16 text-amber-50"
-          autoplay={true}
-          pauseOnHover={true}
-        />
+        
       </main>
     </ClickSpark>
   );
