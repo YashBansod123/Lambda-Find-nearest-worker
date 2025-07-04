@@ -34,7 +34,7 @@ export default function Navbar() {
     }, 4000); // Change every 1 second
 
     return () => clearInterval(interval);
-  }, []);
+  }, [placeholders.length]);
   const handleSearch = (e) => {
     e.preventDefault();
     if (!search.trim()) return;

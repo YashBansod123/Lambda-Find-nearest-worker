@@ -13,13 +13,13 @@ const Page = () => {
   } else {
     document.title = `${session.user.email} - lambda - to the future`;
   }
-}, [session]);
+}, [session,router]);
 
   useEffect(() => {
     if (session) {
       router.push("/dashboard");
     }
-  }, [session]);
+  }, [session,router]);
 
   return (
     <div className="flex flex-col items-center justify-center py-14 mx-auto text-white">

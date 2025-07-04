@@ -20,7 +20,7 @@ export default function DashboardPage() {
           setUsername(data.username);
         });
     }
-  }, [session, status]);
+  }, [session, status,router]);
 
   const handleSubmit = async (e) => {
     // e.preventDefault();

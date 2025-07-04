@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
+import Image from "next/image";
 export default function UserProfilePanel() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
@@ -23,7 +24,7 @@ export default function UserProfilePanel() {
 
   return (
     <div className="relative">
-      <img
+      <Image
         src={imageSrc}
         alt="profile"
         onClick={togglePanel}
@@ -33,7 +34,7 @@ export default function UserProfilePanel() {
       {open && (
         <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-900 shadow-lg rounded-xl p-4 z-50">
           <div className="flex items-center gap-3 mb-3">
-            <img
+            <Image
               src={imageSrc}
               alt="profile"
               className="w-12 h-12 rounded-full"

@@ -105,7 +105,7 @@ export default function AboutPage() {
               Ready to experience smarter service?
             </h2>
             <p className="mb-6 text-slate-600 dark:text-slate-400">
-              Whether you're a customer or a worker — Lambda is built for you.
+              Whether you&apos;re a customer or a worker — Lambda is built for you.
             </p>
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl shadow-md">
               Get Started

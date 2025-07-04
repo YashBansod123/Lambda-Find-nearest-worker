@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
 import ClickSpark from "@/components/ClickSpark";
-import RollingGallery from "@/components/RollingGallery";
 import CircularGallery from "@/components/CircularGallery";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -149,7 +148,7 @@ export default function HomePage() {
                       <Link href={`/workers/${worker.name.toLowerCase()}`}>
 
                       <div className="rounded-full bg-white dark:bg-orange-600 p-[1px]">
-                        <img
+                        <Image
                           src={worker.image}
                           alt={worker.name}
                           className="w-[100px] h-[100px] object-cover rounded-full"
@@ -185,8 +184,8 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                "Lambda helped me find an electrician in 10 minutes. Super
-                smooth!"
+                &quot;Lambda helped me find an electrician in 10 minutes. Super
+                smooth!&quot;
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, x: 40 }}
@@ -203,7 +202,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                "As a mechanic, I get 5-6 new jobs daily thanks to Lambda."
+                &quot;As a mechanic, I get 5-6 new jobs daily thanks to Lambda.&quot;
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, x: 40 }}
@@ -220,7 +219,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                "It’s like Swiggy for workers. Booked a plumber in seconds."
+                &quot;It&apos;s like Swiggy for workers. Booked a plumber in seconds.&quot;
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, x: 40 }}

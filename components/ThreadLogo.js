@@ -35,8 +35,8 @@ export default function ThreadLogo({ size = 40, strokeWidth = 12 }) {
     >
       <defs>
         <linearGradient id="threadGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#f59e0b" /> // orange-200
-          <stop offset="100%" stopColor="#ef4444" /> // orange-600
+          <stop offset="0%" stopColor="#f59e0b" /> 
+          <stop offset="100%" stopColor="#ef4444" /> 
         </linearGradient>
       </defs>
       <path

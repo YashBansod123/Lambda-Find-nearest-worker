@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import handlePayment from "@/components/HandlePayment"; // ✅ Import here
 import Link from "next/link"
+import Image from "next/image";
 export default function WorkerCard({ worker }) {
   const router = useRouter(); // ✅ Get router instance
 
   return (
     <div className="border rounded-xl p-4 shadow-sm flex gap-4 dark:bg-slate-900 bg-slate-100">
-      <img
+      <Image
         src={worker.image}
         alt={worker.name}
         className="w-28 h-28 object-cover rounded-md"
