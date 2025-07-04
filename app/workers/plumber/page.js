@@ -29,13 +29,18 @@ export default function PlumberPage() {
   const [userCity, setUserCity] = useState("");
   const [locationDenied, setLocationDenied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+  cosnt [loading, setLoading]=useState(true);
   const searchParams = useSearchParams();
   const queryCity = searchParams.get("city");
   const handleClick = (plumber) => {
     handlePayment(plumber, router); // ✅ passing router
   };
 
+  useEffect(()=>{
+    if(plumbers.length<0){
+      setLoading(false);
+    }
+  })
   // Get user city on load
   useEffect(() => {
     if (navigator.geolocation) {
@@ -86,6 +91,11 @@ export default function PlumberPage() {
 
   
   return (
+    <>{
+      Loading?(
+         <div className="flex justify-center -ml-50 py-10 ">
+            <ThreadLogo size={250} strokeWidth={6} />
+          </div>):(
     <div className="min-h-screen p-6 bg-white dark:bg-slate-950 text-black dark:text-white">
       <h1 className="text-2xl font-bold mb-4">
         Plumbers {userCity && `in ${userCity}`}
@@ -195,6 +205,7 @@ export default function PlumberPage() {
           </div>
         ))}
       </div>
-    </div>
+    </div>)}
+    </>
   );
 }
