@@ -19,6 +19,8 @@ export default function Navbar() {
   const { data: session } = useSession();
   const [showSearch, setShowSearch] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+ 
+
   const placeholders = [
     "plumber...",
     "electrician...",
@@ -58,8 +60,13 @@ export default function Navbar() {
   };
 
   if (!isMounted) return null;
+  
+
 
   return (
+    
+  
+
     <nav className="w-full px-4 py-2 bg-gray-300 dark:bg-slate-900 border-b border-slate-300 dark:border-slate-700">
       <div className="flex  md:flex-row items-center justify-between gap-4">
         {/* Logo */}

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const workerSchema = new mongoose.Schema({
   name: String,
+  email: { type: String, unique: true, sparse: true },
   profession: String,
   phone: String,
   whatsapp: String,

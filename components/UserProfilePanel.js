@@ -2,18 +2,20 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-
+import { Button } from "./ui/button";
 export default function UserProfilePanel() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
 
   const togglePanel = () => setOpen(!open);
- const googleDefault = "https://lh3.googleusercontent.com/";
-  const defaultImage = "/default.jpg"; // your own default image
+  const googleDefault = "https://lh3.googleusercontent.com/";
+  const defaultImage = "/default1.jpeg"; // your own default image
 
   const userImage = session?.user?.image;
   const useDefault =
-    userImage && userImage.startsWith(googleDefault) && userImage.includes("=s96-c");
+    userImage &&
+    userImage.startsWith(googleDefault) &&
+    userImage.includes("=s96-c");
 
   const imageSrc = useDefault ? defaultImage : userImage;
 
@@ -65,12 +67,17 @@ export default function UserProfilePanel() {
               </Link>
             </li>
             <li>
-              <button
+              <Link href="/dashboard/edit-profile">
+                <Button variant="outline">✏️ Edit Worker Profile</Button>
+              </Link>
+            </li>
+            <li>
+              <Button
                 onClick={() => signOut()}
                 className="w-full text-left px-2 py-1 text-red-600 hover:bg-gray-100 dark:hover:bg-slate-800 rounded"
               >
                 🔓 Logout
-              </button>
+              </Button>
             </li>
           </ul>
         </div>

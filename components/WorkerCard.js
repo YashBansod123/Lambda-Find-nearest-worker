@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import handlePayment from "@/components/HandlePayment"; // ✅ Import here
-
+import Link from "next/link"
 export default function WorkerCard({ worker }) {
   const router = useRouter(); // ✅ Get router instance
 
@@ -44,9 +44,9 @@ export default function WorkerCard({ worker }) {
         </div>
 
         <div className="flex gap-3 mt-3 flex-wrap">
-          <a href={`tel:${worker.phone}`}>
+          <Link href={`tel:${worker.phone}`}>
             <Button className="cursor-pointer">📞 Call</Button>
-          </a>
+         </Link>
 
           <Button
             onClick={() => handlePayment(worker, router)}
@@ -56,13 +56,13 @@ export default function WorkerCard({ worker }) {
           </Button>
 
           {worker.whatsapp ? (
-            <a
+            <Link
               href={`https://wa.me/${worker.whatsapp.replace("+", "")}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               <Button variant="outline">💬 WhatsApp</Button>
-            </a>
+           </Link>
           ) : (
             <Button variant="outline" disabled>
               💬 Not Available

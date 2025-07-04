@@ -1,7 +1,11 @@
-"use client";
+"use client"
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function AddWorkerPage() {
+  const { data: session } = useSession();
+  const userEmail = session?.user?.email;
+
   const [formData, setFormData] = useState({
     name: "",
     profession: "",
@@ -16,25 +20,26 @@ export default function AddWorkerPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const tagsArray = formData.tags
-      .split(",")
-      .map((tag) => tag.trim().toLowerCase());
+    if (!userEmail) {
+      alert("Please login first.");
+      return;
+    }
+
+    const tagsArray = formData.tags.split(",").map((tag) => tag.trim().toLowerCase());
 
     const payload = {
       ...formData,
+      email: userEmail, // ✅ auto-filled
       price: parseInt(formData.price),
-      rating: 0, // Default
-      reviews: 0, // Default
-      verified: false, // Only editable by admin later
+      rating: 0,
+      reviews: 0,
+      verified: false,
       tags: tagsArray,
     };
 
@@ -45,7 +50,7 @@ export default function AddWorkerPage() {
     });
 
     if (res.ok) {
-      alert("✅ Worker added successfully!");
+      alert("✅ Worker added!");
       setFormData({
         name: "",
         profession: "",
@@ -58,7 +63,7 @@ export default function AddWorkerPage() {
         image: "",
       });
     } else {
-      alert("❌ Error adding worker");
+      alert("❌ Failed to add worker");
     }
   };
 
@@ -90,9 +95,8 @@ export default function AddWorkerPage() {
           </div>
         ))}
 
-        <div className="flex items-center gap-2 opacity-50">
-          <input type="checkbox" disabled checked={false} />
-          <label className="font-medium">Verified (only admin can mark)</label>
+        <div className="text-sm text-gray-500 mb-4">
+          Email (auto-filled): <b>{userEmail || "Not logged in"}</b>
         </div>
 
         <button

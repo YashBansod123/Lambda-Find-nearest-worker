@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import WorkerCard from "@/components/WorkerCard";
-
+import ThreadLogo from "@/components/ThreadLogo";
 export default function WorkerSearchPage() {
   const [workers, setWorkers] = useState([]);
   const [filteredWorkers, setFilteredWorkers] = useState([]);
@@ -12,6 +12,14 @@ export default function WorkerSearchPage() {
   const [sort, setSort] = useState("relevance");
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
+  const [loading, setLoading] = useState(true);
+  
+  //set loading to false after workers are fetched or location denied 
+  useEffect(() => {
+  if (workers.length > 0 || locationDenied) {
+    setLoading(false);
+  }
+}, [workers, locationDenied]);
 
   // Get user location
   useEffect(() => {
@@ -76,6 +84,12 @@ export default function WorkerSearchPage() {
   const sortOptions = ["Relevance", "Rating", "Popular"];
 
   return (
+    <>
+    {loading ? (
+  <div className="flex justify-center -ml-50 py-10 ">
+    <ThreadLogo size={250} strokeWidth={6} />
+  </div>
+) : (
     <div className="p-6 min-h-screen text-black dark:text-white bg-white dark:bg-slate-950">
       <h1 className="text-2xl font-bold mb-4">
         Search Results for <span className="text-orange-500">"{query}"</span>{" "}
@@ -113,6 +127,7 @@ export default function WorkerSearchPage() {
           ))}
         </div>
       )}
-    </div>
+    </div>)}
+    </>
   );
 }

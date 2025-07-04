@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-
+import Link from "next/link";
 const GooeyNav = ({
   items,
   animationTime = 600,
@@ -307,13 +307,13 @@ const GooeyNav = ({
                   }`}
                 onClick={(e) => handleClick(e, index)}
               >
-                <a
+                <Link
                   href={item.href}
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   className="outline-none"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
