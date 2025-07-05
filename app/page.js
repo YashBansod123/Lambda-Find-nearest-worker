@@ -57,24 +57,23 @@ export default function HomePage() {
               </p>
             </div>
             <form
-          onSubmit={handleSearch}
-          className="flex md:hidden sm:flex-row items-center gap-2 w-full sm:w-auto"
-        >
-
-          <input
-            type="text"
-            placeholder="Search City..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="px-3 py-2 w-full sm:w-64 rounded-md bg-white text-black dark:bg-slate-700 dark:text-white outline-none"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md md:w-full"
-          >
-            Search
-          </button>
-        </form>
+              onSubmit={handleSearch}
+              className="flex md:hidden sm:flex-row items-center gap-2 w-full sm:w-auto"
+            >
+              <input
+                type="text"
+                placeholder="Search City..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="px-3 py-2 w-full sm:w-64 rounded-md bg-white text-black dark:bg-slate-700 dark:text-white outline-none"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md md:w-full"
+              >
+                Search
+              </button>
+            </form>
             <div className="flex justify-center md:justify-start gap-4 mt-4">
               <Link href="/workers">
                 <motion.button
@@ -115,7 +114,7 @@ export default function HomePage() {
         </div>
 
         <div
-           className="  mt-28 md:w-[700px]   flex flex-col items-center justify-center rounded-2xl "
+          className="  mt-28 md:w-[700px]   flex flex-col items-center justify-center rounded-2xl "
           style={{ height: "300px", position: "relative" }}
         >
           <h1 className="text-3xl md:text-4xl font-bold text-center text-slate-800 dark:text-white">
@@ -143,19 +142,24 @@ export default function HomePage() {
                     <motion.div
                       whileHover={{ scale: 1.15 }}
                       whileTap={{ scale: 0.95 }}
-                      className="min-w-[120px] md:min-w-[100px] md:min-h-[100px] p-1 rounded-full bg-white dark:bg-orange-600 shadow-md text-center cursor-pointer"
+                      className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] p-1 flex items-center justify-center rounded-full bg-white dark:bg-orange-600 shadow-md cursor-pointer"
                     >
-                      <Link href={`/workers/${worker.name.toLowerCase()}`}>
-
-                      <div className="rounded-full bg-white dark:bg-orange-600 p-[1px]">
-                        <Image
-                          src={worker.image}
-                          alt={worker.name}
-                          className="w-[100px] h-[100px] object-cover rounded-full"
-                        />
-                      </div>
+                      <Link
+                        href={`/workers/${worker.name.toLowerCase()}`}
+                        className="block w-full h-full"
+                      >
+                        <div className="w-full h-full rounded-full overflow-hidden">
+                          <Image
+                            width={100}
+                            height={100}
+                              src={worker.image || "/plumber.jpg"}
+                            alt={worker.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                       </Link>
                     </motion.div>
+
                     <p className="text-sm md:text-base font-semibold mt-2 text-black dark:font-bold dark:text-black">
                       {worker.name}
                     </p>
@@ -202,7 +206,8 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                &quot;As a mechanic, I get 5-6 new jobs daily thanks to Lambda.&quot;
+                &quot;As a mechanic, I get 5-6 new jobs daily thanks to
+                Lambda.&quot;
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, x: 40 }}
@@ -219,7 +224,8 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                &quot;It&apos;s like Swiggy for workers. Booked a plumber in seconds.&quot;
+                &quot;It&apos;s like Swiggy for workers. Booked a plumber in
+                seconds.&quot;
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, x: 40 }}
@@ -234,7 +240,7 @@ export default function HomePage() {
         </div>
         {/* one br line using div to seaprate bottom portion with upper */}
         <div className="w-full h-1 bg-gradient-to-r from-white to-orange-600 mt-28 "></div>
-        
+
         {/* //button for login to create worker account */}
         <div className="flex flex-col items-center justify-center mt-16">
           <motion.h2
@@ -246,20 +252,18 @@ export default function HomePage() {
             Create Your Account As a Worker
           </motion.h2>
           <Link href="/admin/add-worker">
-          <div className="flex items-center justify-center">
-            <motion.button
-              className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              Sign Up
-            </motion.button>
-          </div>
+            <div className="flex items-center justify-center">
+              <motion.button
+                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                Sign Up
+              </motion.button>
+            </div>
           </Link>
         </div>
-
-        
       </main>
     </ClickSpark>
   );

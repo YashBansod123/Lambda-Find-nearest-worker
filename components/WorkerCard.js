@@ -11,6 +11,8 @@ export default function WorkerCard({ worker }) {
   return (
     <div className="border rounded-xl p-4 shadow-sm flex gap-4 dark:bg-slate-900 bg-slate-100">
       <Image
+        width={100}
+        height={100}
         src={worker.image}
         alt={worker.name}
         className="w-28 h-28 object-cover rounded-md"

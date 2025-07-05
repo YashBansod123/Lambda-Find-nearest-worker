@@ -25,6 +25,8 @@ export default function UserProfilePanel() {
   return (
     <div className="relative">
       <Image
+        width={10}
+        height={10}
         src={imageSrc}
         alt="profile"
         onClick={togglePanel}
