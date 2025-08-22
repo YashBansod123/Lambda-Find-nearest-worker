@@ -62,7 +62,7 @@ export default function HomePage() {
             >
               <input
                 type="text"
-                placeholder="Search City..."
+                placeholder="Search for workers (e.g., plumber, electrician)"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="px-3 py-2 w-full sm:w-64 rounded-md bg-white text-black dark:bg-slate-700 dark:text-white outline-none"
