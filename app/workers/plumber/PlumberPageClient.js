@@ -140,7 +140,7 @@ export default function PlumberPageClient() {
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">{plumber.address}</p>
               <p className="text-green-600 font-semibold mt-1">
-                ⭐ {plumber.rating} ({plumber.ratingsCount} Ratings)
+                ⭐ {plumber.rating.toFixed(1)} ({plumber.ratingsCount} Ratings)
               </p>
               <div className="flex gap-2 mt-2 flex-wrap">
                 {plumber.tags.map((tag, i) => (

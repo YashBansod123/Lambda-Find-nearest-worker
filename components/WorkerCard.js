@@ -30,10 +30,13 @@ export default function WorkerCard({ worker }) {
         <p className="text-sm text-gray-500 dark:text-gray-400">
           {worker.address}
         </p>
-
-        <p className="text-green-600 font-semibold mt-1">
-          ⭐ {worker.rating} ({worker.ratingsCount || 0} Ratings)
+        //round off the rating to 1 decimal place
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Rating: {worker.rating ? worker.rating.toFixed(1) : "N/A"} ⭐
         </p>
+        {/* <p className="text-green-600 font-semibold mt-1">
+          ⭐ {worker.rating} ({worker.ratingsCount || 0} Ratings)
+        </p> */}
 
         <div className="flex gap-2 mt-2 flex-wrap">
           {worker.tags?.map((tag, i) => (
