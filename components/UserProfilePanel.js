@@ -56,7 +56,7 @@ export default function UserProfilePanel() {
               </Link>
             </li>
             <li>
-              <Link href="/add-worker">
+              <Link href="/dashboard/add-worker">
                 <span className="block px-2 py-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded">
                   🛠️ Add Worker
                 </span>

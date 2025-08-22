@@ -75,7 +75,7 @@ export default function HomePage() {
               </button>
             </form>
             <div className="flex justify-center md:justify-start gap-4 mt-4">
-              <Link href="/workers">
+              <Link href="/login">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
