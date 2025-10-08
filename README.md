@@ -58,12 +58,21 @@ When I ask about this project, consider:
 
 ### 🏠 Home Page
 <img width="1920" height="832" alt="Screenshot (514)" src="https://github.com/user-attachments/assets/03b64c58-ecca-4b89-ab8d-db3f50bfd94f" />
-(https://your-image-link-here)
+<img width="1920" height="837" alt="Screenshot (515)" src="https://github.com/user-attachments/assets/bc7299f1-1e64-41ed-b6e7-a4b23fac9fb4" />
+<img width="1920" height="827" alt="Screenshot (516)" src="https://github.com/user-attachments/assets/dd07fee7-b337-4e13-98de-b25a4d730575" />
+
+
+![Home page](https://lambda-find-nearest-worker.vercel.app/)
 
 ### 🔍 Worker Listing
-![Worker Listing](https://your-image-link-here)
+<img width="1920" height="808" alt="Screenshot (517)" src="https://github.com/user-attachments/assets/68498dde-e58c-4a2b-8e2f-795bd8cb10ca" />
+
+
+![Worker Listing](https://lambda-find-nearest-worker.vercel.app/workers/search?q=electrician)
 
 ### 👤 Worker Profile
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8645d5e9-1afa-439b-9ec6-7de540e811bb" />
+
 ![Worker Profile](https://your-image-link-here)
 
 > 🧩 Replace the image links above with your actual screenshot URLs or local assets.
