@@ -68,14 +68,14 @@ When I ask about this project, consider:
 <img width="1920" height="808" alt="Screenshot (517)" src="https://github.com/user-attachments/assets/68498dde-e58c-4a2b-8e2f-795bd8cb10ca" />
 
 
-![Worker Listing](https://lambda-find-nearest-worker.vercel.app/workers/search?q=electrician)
+(https://lambda-find-nearest-worker.vercel.app/workers/search?q=electrician)
 
 ### 👤 Worker Profile
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8645d5e9-1afa-439b-9ec6-7de540e811bb" />
 
-![Worker Profile](https://your-image-link-here)
+![Wroker prfile](https://your-image-link-here)
 
-> 🧩 Replace the image links above with your actual screenshot URLs or local assets.
+
 
 ---
 
