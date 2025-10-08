@@ -57,7 +57,8 @@ When I ask about this project, consider:
 ## 🖼️ Project Preview
 
 ### 🏠 Home Page
-![Home Page](https://your-image-link-here)
+<img width="1920" height="832" alt="Screenshot (514)" src="https://github.com/user-attachments/assets/03b64c58-ecca-4b89-ab8d-db3f50bfd94f" />
+(https://your-image-link-here)
 
 ### 🔍 Worker Listing
 ![Worker Listing](https://your-image-link-here)
