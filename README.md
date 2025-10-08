@@ -73,7 +73,7 @@ When I ask about this project, consider:
 ### 👤 Worker Profile
 <img width="1920" height="821" alt="Screenshot (518)" src="https://github.com/user-attachments/assets/e66088cf-e407-462a-a29c-38dfb9193375" />
 
-(https://your-image-link-here)
+![worker profile](https://lambda-find-nearest-worker.vercel.app/dashboard/edit-profile)
 
 
 
