@@ -62,7 +62,7 @@ When I ask about this project, consider:
 <img width="1920" height="827" alt="Screenshot (516)" src="https://github.com/user-attachments/assets/dd07fee7-b337-4e13-98de-b25a4d730575" />
 
 
-![Home page](https://lambda-find-nearest-worker.vercel.app/)
+(https://lambda-find-nearest-worker.vercel.app/)
 
 ### 🔍 Worker Listing
 <img width="1920" height="808" alt="Screenshot (517)" src="https://github.com/user-attachments/assets/68498dde-e58c-4a2b-8e2f-795bd8cb10ca" />
