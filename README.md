@@ -71,9 +71,9 @@ When I ask about this project, consider:
 (https://lambda-find-nearest-worker.vercel.app/workers/search?q=electrician)
 
 ### 👤 Worker Profile
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8645d5e9-1afa-439b-9ec6-7de540e811bb" />
+<img width="1920" height="821" alt="Screenshot (518)" src="https://github.com/user-attachments/assets/e66088cf-e407-462a-a29c-38dfb9193375" />
 
-![Wroker prfile](https://your-image-link-here)
+(https://your-image-link-here)
 
 
 
