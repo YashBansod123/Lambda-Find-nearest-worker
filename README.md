@@ -85,7 +85,7 @@ Follow these steps to run Lambda locally:
 
 ```bash
 # 1️⃣ Clone this repository
-git clone https://github.com/yourusername/lambda-find-worker.git
+git clone https://github.com/YashBansod123/Lambda-Find-nearest-worker.git
 
 # 2️⃣ Navigate into the project folder
 cd lambda-find-worker
