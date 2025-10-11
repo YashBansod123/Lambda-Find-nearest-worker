@@ -57,15 +57,25 @@ When I ask about this project, consider:
 ## 🖼️ Project Preview
 
 ### 🏠 Home Page
-![Home Page](https://your-image-link-here)
+<img width="1920" height="832" alt="Screenshot (514)" src="https://github.com/user-attachments/assets/03b64c58-ecca-4b89-ab8d-db3f50bfd94f" />
+<img width="1920" height="837" alt="Screenshot (515)" src="https://github.com/user-attachments/assets/bc7299f1-1e64-41ed-b6e7-a4b23fac9fb4" />
+<img width="1920" height="827" alt="Screenshot (516)" src="https://github.com/user-attachments/assets/dd07fee7-b337-4e13-98de-b25a4d730575" />
+
+
+(https://lambda-find-nearest-worker.vercel.app/)
 
 ### 🔍 Worker Listing
-![Worker Listing](https://your-image-link-here)
+<img width="1920" height="808" alt="Screenshot (517)" src="https://github.com/user-attachments/assets/68498dde-e58c-4a2b-8e2f-795bd8cb10ca" />
+
+
+(https://lambda-find-nearest-worker.vercel.app/workers/search?q=electrician)
 
 ### 👤 Worker Profile
-![Worker Profile](https://your-image-link-here)
+<img width="1920" height="821" alt="Screenshot (518)" src="https://github.com/user-attachments/assets/e66088cf-e407-462a-a29c-38dfb9193375" />
 
-> 🧩 Replace the image links above with your actual screenshot URLs or local assets.
+(https://lambda-find-nearest-worker.vercel.app/dashboard/edit-profile)
+
+
 
 ---
 
@@ -75,7 +85,7 @@ Follow these steps to run Lambda locally:
 
 ```bash
 # 1️⃣ Clone this repository
-git clone https://github.com/yourusername/lambda-find-worker.git
+git clone https://github.com/YashBansod123/Lambda-Find-nearest-worker.git
 
 # 2️⃣ Navigate into the project folder
 cd lambda-find-worker
