@@ -1,7 +1,7 @@
-import connectDb from "@/lib/connectDb"; // Adjust the path to your connectDb file
+import connectDb from "@/db/connectDb"; // Adjust the path to your connectDb file
 import Worker from "@/models/Worker";   // Adjust the path to your Worker model
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";           // Adjust the path to your server-side auth function
+import { auth } from "@/lib/authOptions";           // Adjust the path to your server-side auth function
 
 // Function to GET a SINGLE worker by their ID
 export async function GET(request, { params }) {
