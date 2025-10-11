@@ -152,7 +152,7 @@ export default function HomePage() {
                           <Image
                             width={100}
                             height={100}
-                              src={worker.image || "/plumber.jpg"}
+                            src={worker.image || "/plumber.jpg"}
                             alt={worker.name}
                             className="w-full h-full object-cover"
                           />
