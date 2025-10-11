@@ -43,7 +43,7 @@ export default function AddWorkerPage() {
       tags: tagsArray,
     };
 
-    const res = await fetch("/api/Workers", {
+    const res = await fetch("/api/workers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
