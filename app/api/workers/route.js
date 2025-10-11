@@ -10,36 +10,35 @@ export async function GET(req) {
     await connectDb();
     const { searchParams } = new URL(req.url);
 
-    // Get all possible search parameters from the URL
     const profession = searchParams.get("profession");
     const city = searchParams.get("city");
-    const query = searchParams.get("q"); // 'q' will be our general search for name, etc.
+    const query = searchParams.get("q"); // 'q' is for a general search (like name)
 
-    // This array will hold all our search conditions
     const filterConditions = [];
 
-    // If a profession is provided, add it as a condition
+    // This part is for specific filters like profession and city
     if (profession) {
       filterConditions.push({ profession: { $regex: profession, $options: "i" } });
     }
-
-    // If a city is provided, add it as a condition
     if (city) {
       filterConditions.push({ city: { $regex: city, $options: "i" } });
     }
 
-    // If a general query (for name) is provided, add it as a condition
+    // This part handles the general search query 'q' across multiple fields
+    // This is the smart logic from your old code!
     if (query) {
-      filterConditions.push({ name: { $regex: query, $options: "i" } });
+      filterConditions.push({
+        $or: [
+          { name: { $regex: query, $options: "i" } },
+          { profession: { $regex: query, $options: "i" } },
+          { city: { $regex: query, $options: "i" } },
+        ],
+      });
     }
 
-    // Build the final filter object. If there are conditions, use the $and operator
-    // This ensures that ALL conditions must be met (e.g., profession AND city)
     const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
 
-    // Find all workers that match the final filter
     const workers = await Worker.find(filter);
-    
     return NextResponse.json(workers);
 
   } catch (error) {
@@ -47,7 +46,6 @@ export async function GET(req) {
     return NextResponse.json({ error: "Server error during search" }, { status: 500 });
   }
 }
-
 // ✅ FUNCTION 2: To POST (create) a new worker
 export async function POST(req) {
   try {
