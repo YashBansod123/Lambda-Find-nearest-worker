@@ -14,7 +14,7 @@ export default function ElectricianPage() {
   useEffect(() => {
   const fetchElectricians = async () => {
     try {
-      const res = await fetch("/api/Workers?profession=electricians");
+      const res = await fetch("/api/workers?profession=electricians");
       const data = await res.json();
       setElectricians(data);
     } catch (error) {

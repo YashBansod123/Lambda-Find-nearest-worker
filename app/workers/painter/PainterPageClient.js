@@ -41,7 +41,7 @@ export default function PainterPage() {
   useEffect(() => {
     const fetchPainters = async () => {
       try {
-        const res = await fetch("/api/Workers?profession=Painter");
+        const res = await fetch("/api/workers?profession=Painter");
         const data = await res.json();
         setPainters(data);
       } catch (err) {

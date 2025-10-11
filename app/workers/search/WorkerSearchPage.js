@@ -49,7 +49,7 @@ export default function WorkerSearchPage() {
 
     const fetchData = async () => {
       try {
-        const res = await fetch(`/api/Workers?q=${query}`);
+        const res = await fetch(`/api/workers?q=${query}`);
         const data = await res.json();
         setWorkers(data);
       } catch (err) {

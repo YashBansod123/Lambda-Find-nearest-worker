@@ -20,7 +20,7 @@ export default function WorkerPageClient({ profession }) {
   useEffect(() => {
     const fetchWorkers = async () => {
       try {
-        const res = await fetch(`/api/Workers?profession=${profession}`);
+        const res = await fetch(`/api/workers?profession=${profession}`);
         const data = await res.json();
         setWorkers(data);
       } catch (error) {

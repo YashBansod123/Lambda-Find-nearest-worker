@@ -21,7 +21,7 @@ export default function PlumberPageClient() {
   useEffect(() => {
     const fetchPlumbers = async () => {
       try {
-        const res = await fetch("/api/Workers?profession=Plumber");
+        const res = await fetch("/api/workers?profession=Plumber");
         const data = await res.json();
         setPlumbers(data);
       } catch (error) {
