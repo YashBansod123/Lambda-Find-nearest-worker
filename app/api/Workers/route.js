@@ -1,3 +1,4 @@
+console.log("--- EXECUTING /api/workers/[id]/route.js --- VERSION 5 ---");
 import connectDb from "@/db/connectDb";
 import Worker from "@/models/Worker";
 import { NextResponse } from "next/server";
@@ -9,6 +10,8 @@ import { authOptions } from "@/lib/authOptions";
 // Function to GET a SINGLE worker by their ID
 export async function GET(request, { params }) {
   try {
+  
+    console.log("--- GET FUNCTION CALLED ---");
     const { id } = params;
     await connectDb();
     const worker = await Worker.findById(id);
@@ -25,6 +28,7 @@ export async function GET(request, { params }) {
 // Function to UPDATE a SINGLE worker by their ID
 export async function PATCH(request, { params }) {
   try {
+    console.log("--- PATCH FUNCTION CALLED ---");
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
