@@ -1,18 +1,30 @@
 import connectDb from "@/db/connectDb";
 import Worker from "@/models/Worker";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions"; // ✅ corrected path
+import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/authOptions";
 
 export async function GET(req) {
-  await connectDb();
+  try {
+    await connectDb();
+    const session = await getServerSession(authOptions);
 
-  const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  if (!session?.user?.email) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 });
+    const email = session.user.email;
+    const worker = await Worker.findOne({ email });
+
+    // THIS IS THE FIX
+    if (!worker) {
+        return NextResponse.json({ error: "Worker profile not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(worker); // This returns the full worker object with the _id
+
+  } catch (error) {
+    console.error("❌ get-worker-by-email error:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
-
-  const email = session.user.email;
-  const worker = await Worker.findOne({ email });
-  return Response.json(worker || {});
 }
