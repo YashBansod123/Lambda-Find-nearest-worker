@@ -16,12 +16,13 @@ export async function GET(req) {
     const email = session.user.email;
     const worker = await Worker.findOne({ email });
 
-    // THIS IS THE FIX
+    // THIS IS THE FIX: Return a 404 error if no worker is found
     if (!worker) {
-        return NextResponse.json({ error: "Worker profile not found" }, { status: 404 });
+      return NextResponse.json({ error: "Worker profile not found" }, { status: 404 });
     }
 
-    return NextResponse.json(worker); // This returns the full worker object with the _id
+    // This returns the full worker object with the _id
+    return NextResponse.json(worker);
 
   } catch (error) {
     console.error("❌ get-worker-by-email error:", error);
