@@ -75,6 +75,11 @@ export default function UserProfilePanel() {
               </Link>
             </li>
             <li>
+              <Link href="/dashboard/my-jobs">
+                <Button variant="outline">🧰 My Jobs</Button>
+              </Link>
+            </li>
+            <li>
               <Button
                 onClick={() => signOut()}
                 className="w-full text-left px-2 py-1 text-red-600 hover:bg-gray-100 dark:hover:bg-slate-800 rounded"
