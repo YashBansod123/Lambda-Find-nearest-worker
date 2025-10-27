@@ -10,7 +10,7 @@ export default function UserProfilePanel() {
 
   const togglePanel = () => setOpen(!open);
   const googleDefault = "https://lh3.googleusercontent.com/";
-  const defaultImage = "/default1.jpeg"; // your own default image
+  const defaultImage = "/default1.jpeg"; 
 
   const userImage = session?.user?.image;
   const useDefault =

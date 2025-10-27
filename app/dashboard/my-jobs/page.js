@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState, useMemo } from "react";
 import LoadingPage from "@/components/LoadingPage"; // Assuming you have this
+import { Button } from "@/components/ui/button"; // <-- ADD THIS LINE
 import Link from "next/link";
 
 export default function WorkerJobsPage() {
